@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --module commonjs index.ts",
+    "postinstall": "typings install",
     "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/paked/pipe-ist#readme",
   "dependencies": {
-    "tsc": "^1.20150623.0"
+    "tsc": "^1.20150623.0",
+    "typings": "^0.6.6"
   }
 }
