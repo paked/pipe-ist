@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "build",
+    "module": "commonjs",
+    "moduleResolution": "classic",
+    "declaration": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "newLine": "LF"
+  },
+  "files": [
+    "index.ts",
+    "typings/main.d.ts"
+  ]
+}

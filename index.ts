@@ -1,6 +1,5 @@
-/// <reference path="typings/main.d.ts" />
-var fs = require('fs');
+import { resolve } from 'path';
+
 export function task(name: string, pipes: string) {
-  console.log(name);
-  console.log(pipes);
+  console.log(`Running task ${name}`);
 };
