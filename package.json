@@ -4,7 +4,8 @@
   "description": "pipe-ist is a simple and powerful build system",
   "main": "index.js",
   "scripts": {
-    "build": "ntsc",
+    "build": "tsc",
+    "lint": "tslint -c tslint.json \"src/**/*.ts\"",
     "postinstall": "typings install --no-insight",
     "prepublish": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,7 +21,8 @@
   },
   "homepage": "https://github.com/paked/pipe-ist#readme",
   "dependencies": {
-    "ntypescript": "^1.201602072208.1",
+    "tslint": "^3.3.0",
+    "typescript": "^1.7.5",
     "typings": "^0.6.6"
   }
 }

@@ -11,7 +11,7 @@
     "newLine": "LF"
   },
   "files": [
-    "index.ts",
+    "src/index.ts",
     "typings/main.d.ts"
   ]
 }
