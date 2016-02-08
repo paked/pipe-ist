@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/paked/pipe-ist#readme",
   "dependencies": {
+    "any-promise": "^1.1.0",
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
     "typings": "^0.6.6"
