@@ -4,16 +4,15 @@ import extend = require('xtend');
 import { readdir, stat } from 'fs';
 import { join } from 'path';
 
-interface doneInterface {
-  max: number;
-  count: number;
-  files: string[];
-}
-
 function getFiles(folder: string="./") : Promise<string[]> {
-  return new Promise<string[]>((rresolve, reject) => {
-    console.log('starting promise chain')
+  return new Promise<string[]>((resolve, reject) => {
     readdir(folder, (err, files) => {
+      interface doneInterface {
+        max: number;
+        count: number;
+        files: string[];
+      }
+
       let DONE : doneInterface = {
         max: files.length,
         count: 0,
@@ -40,11 +39,8 @@ function getFiles(folder: string="./") : Promise<string[]> {
         .then((files) => {
           files.forEach((file) => { DONE.files.push(file) });
 
-          console.log(DONE.count, DONE.max);
-
           if (DONE.count == DONE.max) {
-            console.log('resolving');
-            rresolve(DONE.files);
+            resolve(DONE.files);
           }
         });
 
