@@ -24,6 +24,7 @@
     "any-promise": "^1.1.0",
     "tslint": "^3.3.0",
     "typescript": "^1.7.5",
-    "typings": "^0.6.6"
+    "typings": "^0.6.6",
+    "xtend": "^4.0.1"
   }
 }
