@@ -9,7 +9,7 @@ interface DoneInterface {
   files: string[];
 }
 
-function getFiles(folder: string='./'): Promise<string[]> {
+export function getFiles(folder: string='./'): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {
     readdir(folder, (err, files) => {
       let promises: Promise<any>[] = files.map((filename) => {
