@@ -3,12 +3,6 @@ import Promise = require('any-promise');
 import { readdir, stat, createReadStream } from 'fs';
 import { join } from 'path';
 
-interface DoneInterface {
-  max: number;
-  count: number;
-  files: string[];
-}
-
 export function getFiles(folder: string='./'): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {
     readdir(folder, (err, files) => {
