@@ -1,7 +1,7 @@
 import test = require('blue-tape');
 
 import { join, relative } from 'path';
-import { getFiles } from './index';
+import { getFiles } from './utils';
 
 test('index', t => {
   t.test('list files', t => {
