@@ -3,7 +3,10 @@ import Promise = require('any-promise');
 import { readdir, stat, createReadStream } from 'fs';
 import { join } from 'path';
 
-export function getFiles(folder: string='./'): Promise<string[]> {
+/*
+ * Retrieve all of the files within a given folder.
+ */
+export function getFiles(folder: string = './'): Promise<string[]> {
   return new Promise<string[]>((resolve, reject) => {
     readdir(folder, (err, files) => {
       let promises: Promise<any>[] = files.map((filename) => {
@@ -30,7 +33,7 @@ export function getFiles(folder: string='./'): Promise<string[]> {
 
       Promise.all(promises)
       .then(filenames => {
-        // flatten args
+        // Flatten filenames array (string[][] -> string[])
         let files = [].concat.apply([], filenames);
         resolve(files);
       });
@@ -38,6 +41,9 @@ export function getFiles(folder: string='./'): Promise<string[]> {
   });
 }
 
+/*
+ * Create a task with a name and a set of pipes for it to run through.
+ */
 export function task(name: string, pipes: string[]) {
   getFiles()
   .then((files) => {
@@ -45,7 +51,7 @@ export function task(name: string, pipes: string[]) {
     files.forEach((filename) => {
       let file = createReadStream(filename);
 
-      file.on('data', (chunk : any) => {
+      file.on('data', (chunk: any) => {
         console.log(`Reading ${filename}:`);
         console.log(chunk.toString());
       });

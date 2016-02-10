@@ -73,7 +73,7 @@
       "avoid-escape"
     ],
     "radix": true,
-    "semicolon": false,
+    "semicolon": true,
     "switch-default": true,
     "trailing-comma": false,
     "triple-equals": [
@@ -91,7 +91,7 @@
         "variable-declaration": "nospace"
       }
     ],
-    "use-strict": false,
+    "use-strict": true,
     "variable-name": [
       true,
       "check-format",
