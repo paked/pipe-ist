@@ -3,7 +3,7 @@ import test = require('blue-tape');
 import { join, relative } from 'path';
 import { getFiles } from './utils';
 
-test('index', t => {
+test('utils', t => {
   t.test('list files', t => {
     const FIXTURE_DIR = join(__dirname, '__test__/file-list');
 
