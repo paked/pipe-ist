@@ -12,8 +12,9 @@ test('index', t => {
     const FIXTURE_DIR = join(__dirname, '__test__/index-task');
 
     return task('default', [
-      new RemoveAPipe()
-    ], FIXTURE_DIR)
+                  new RemoveAPipe()
+                ],
+                FIXTURE_DIR)
     .then(() => {
       return readFile(join(FIXTURE_DIR, 'sample.txt.out'), 'utf-8');
     }).then(sampleFile => {

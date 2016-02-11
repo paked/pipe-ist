@@ -1,4 +1,3 @@
-import { Readable, Writable } from 'stream';
 import { Valve } from './valve';
 
 /*

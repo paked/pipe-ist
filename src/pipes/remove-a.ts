@@ -1,4 +1,4 @@
-import { Transform, Readable, Writable } from 'stream';
+import { Transform } from 'stream';
 import { Valve } from './valve';
 
 export class RemoveAPipe extends Transform {
