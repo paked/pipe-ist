@@ -1,8 +1,10 @@
 import test = require('blue-tape');
 
 import { join } from 'path';
+import { EOL } from 'os';
 
 import { task } from './index';
+import { readFile } from './utils';
 import { RemoveAPipe } from './pipes/remove-a';
 
 test('index', t => {
@@ -12,6 +14,14 @@ test('index', t => {
     return task('default', [
       new RemoveAPipe()
     ], FIXTURE_DIR)
-    .then(() => {console.log('done')});
+    .then(() => {
+      return readFile(join(FIXTURE_DIR, 'sample.txt.out'), 'utf-8');
+    }).then(sampleFile => {
+      console.log(sampleFile);
+      t.deepEqual(sampleFile, [
+        `something`,
+        ``
+      ].join(EOL));
+    });
   });
 });
