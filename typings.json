@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "any-promise": "github:typings/typed-any-promise#74ba6cf22149ff4de39c2338a9cb84f9ded6f042",
+    "rimraf": "github:typed-typings/npm-rimraf#cc98cbd747092eeb0a5c73d211878aacd985e5de",
     "thenify": "github:typed-typings/npm-thenify#6ec63ea2de3f0e09d40dfccc9861f3aaa90b8853",
     "xtend": "github:typings/typed-xtend#63cccadf3295b3c15561ee45617ac006edcca9e0"
   },

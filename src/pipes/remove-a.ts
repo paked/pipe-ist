@@ -9,8 +9,6 @@ export class RemoveAPipe extends Transform {
   }
 
   _transform(chunk: any, encoding: string, callback: any) {
-    console.log('doing something');
-
     chunk = chunk.toString().replace(/a/g, '');
 
     this.push(chunk);
