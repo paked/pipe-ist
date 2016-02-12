@@ -19,7 +19,8 @@ test('index', t => {
                 FIXTURE_DIR)
     .then(() => {
       return readFile(join(FIXTURE_DIR, '/dist/sample.txt'), 'utf-8');
-    }).then(sampleFile => {
+    })
+    .then(sampleFile => {
       t.deepEqual(sampleFile, [
         `something`,
         ``

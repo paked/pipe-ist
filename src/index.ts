@@ -31,26 +31,29 @@ export function task(name: string, pipes: Pipe[], directory = './'): Promise<any
       mkdirSync(distPath);
       resolve();
     });
-  }).then(() => {return getFiles(directory); })
+  })
+  .then(() => {
+    return getFiles(directory);
+  })
   .then((files) => {
     let promises: Promise<any>[] = files.map((filename) => {
       return new Promise<any>(resolve => {
-          let v: Valve = new Valve(
-            createReadStream(filename),
-            filename + '.out',
-            filename
-          );
+        let v: Valve = new Valve(
+          createReadStream(filename),
+          filename + '.out',
+          filename
+        );
 
-          for (let i = 0; i < pipes.length; i++) {
-            v = pipes[i].do(v);
-          }
+        for (let i = 0; i < pipes.length; i++) {
+          v = pipes[i].do(v);
+        }
 
-          v.input.pipe(createWriteStream(v.output));
+        v.input.pipe(createWriteStream(v.output));
 
-          resolve();
-        });
+        resolve();
       });
-
-      return Promise.all(promises);
     });
+
+    return Promise.all(promises);
+  });
 }
