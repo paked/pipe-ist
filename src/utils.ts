@@ -5,7 +5,7 @@ import { readdir, stat } from 'fs';
 import { join } from 'path';
 import * as fs from 'fs';
 
-// `readFile` in promise form, courtesy https://github.com/typings/typings/blob/master/src/utils/fs.ts#L40
+// `fs.readFile` in promise form, courtesy https://github.com/typings/typings/blob/master/src/utils/fs.ts#L40
 export const readFile: (path: string, encoding: string) => Promise<string> = thenify<string, string, string>(fs.readFile);
 
 /*

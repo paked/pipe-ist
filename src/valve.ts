@@ -1,4 +1,4 @@
-import { Readable, Writable } from 'stream';
+import { Readable } from 'stream';
 
 export class Valve {
   public input: any;

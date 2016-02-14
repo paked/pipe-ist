@@ -1,5 +1,4 @@
 import { relative, join } from 'path';
-import { createWriteStream } from 'fs';
 
 import { Valve } from './valve';
 

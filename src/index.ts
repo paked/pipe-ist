@@ -1,6 +1,6 @@
 import Promise = require('any-promise');
 
-import { mkdirSync, rmdirSync, stat, createReadStream, createWriteStream } from 'fs';
+import { mkdirSync, stat, createReadStream, createWriteStream } from 'fs';
 import { join } from 'path';
 import rimraf = require('rimraf');
 
@@ -15,7 +15,7 @@ export function task(name: string, pipes: Pipe[], directory = './'): Promise<any
   return new Promise<any>((resolve) => {
     let distPath = join(directory, 'dist');
     stat(distPath, (err, stats) => {
-      if (err == undefined) {
+      if (err === undefined) {
         rimraf(distPath, (err) => {
           if (err) {
             console.log('something error-y happened!');
