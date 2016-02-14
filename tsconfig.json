@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "outDir": "build",
-    "module": "commonjs",
-    "moduleResolution": "classic",
-    "declaration": true,
-    "noImplicitAny": true,
-    "removeComments": true,
-    "sourceMap": true,
-    "newLine": "LF"
+    "module": "commonjs"
   },
   "files": [
+    "src/valve.ts",
     "src/index.ts",
     "src/utils.ts",
+    "src/pipe.ts",
+    "src/pipes/compile-typescript.ts",
+    "src/pipes/move-to-bin.ts",
+    "src/pipes/remove-a.ts",
     "typings/main.d.ts"
   ]
 }

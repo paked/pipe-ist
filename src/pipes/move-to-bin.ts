@@ -1,6 +1,6 @@
 import { relative, join } from 'path';
 
-import { Valve } from './valve';
+import { Valve } from '../valve';
 
 export class MoveToBinPipe {
   private root: string;
@@ -11,7 +11,7 @@ export class MoveToBinPipe {
 
   do(v: Valve): Valve {
     let dist = join(this.root, 'dist');
-    let out = join(dist, relative(this.root, v.filename));
+    let out = join(dist, relative(this.root, v.output));
 
     v.output = out;
 

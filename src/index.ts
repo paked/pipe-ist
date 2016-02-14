@@ -15,7 +15,7 @@ export function task(name: string, pipes: Pipe[], directory = './'): Promise<any
   return new Promise<any>((resolve) => {
     let distPath = join(directory, 'dist');
     stat(distPath, (err, stats) => {
-      if (err === undefined) {
+      if (err == undefined) {
         rimraf(distPath, (err) => {
           if (err) {
             console.log('something error-y happened!');
@@ -40,7 +40,6 @@ export function task(name: string, pipes: Pipe[], directory = './'): Promise<any
       return new Promise<any>(resolve => {
         let v: Valve = new Valve(
           createReadStream(filename),
-          filename + '.out',
           filename
         );
 

@@ -19,7 +19,7 @@ test('index', t => {
                 ],
                 FIXTURE_DIR)
     .then(() => {
-      return readFile(join(FIXTURE_DIR, '/dist/sample.txt'), 'utf-8');
+      return readFile(join(FIXTURE_DIR, 'dist/sample.txt'), 'utf-8');
     })
     .then(sampleFile => {
       t.deepEqual(sampleFile, [
@@ -36,7 +36,18 @@ test('index', t => {
                   new CompileTypeScriptPipe(),
                   new MoveToBinPipe(FIXTURE_DIR)
                 ],
-                FIXTURE_DIR).
-    then(() => { console.log('finished the thing!'); });
+                FIXTURE_DIR)
+    .then(() => { return readFile(join(FIXTURE_DIR, '/dist/something.js'), 'utf-8')})
+    .then(compiledJS => {
+      t.deepEqual(compiledJS, [
+        `var HelloWorldGreeter = (function () {`,
+        `    function HelloWorldGreeter() {`,
+        `        console.log('Hello, World');`,
+        `    }`,
+        `    return HelloWorldGreeter;`,
+        `})();`,
+        ``
+      ].join(EOL));
+    });
   });
 });

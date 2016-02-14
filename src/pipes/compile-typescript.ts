@@ -1,8 +1,8 @@
 import { transpile, ModuleKind} from 'typescript';
 import { Transform } from 'stream';
-import { extname } from 'path';
+import { extname, parse, format } from 'path';
 
-import { Valve } from './valve';
+import { Valve } from '../valve';
 
 export class CompileTypeScriptPipe extends Transform {
   do(v: Valve): Valve {
@@ -20,6 +20,7 @@ export class CompileTypeScriptPipe extends Transform {
   }
 
   _transform(chunk: any, encoding: string, callback: any) {
+    console.log('transforming');
     chunk = transpile(chunk.toString(), { module: ModuleKind.CommonJS });
 
     this.push(chunk);
