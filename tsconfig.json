@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs"
+    "module": "commonjs",
+    "outDir": "dist"
   },
   "files": [
     "src/valve.ts",
     "src/index.ts",
     "src/utils.ts",
+    "src/bin/piper.ts",
     "src/pipe.ts",
     "src/pipes/compile-typescript.ts",
     "src/pipes/move-to-bin.ts",
