@@ -9,6 +9,10 @@ export class MoveToBinPipe {
     this.root = root;
   }
 
+  allows(filename: string): boolean {
+    return true;
+  }
+
   do(v: Valve): Valve {
     let dist = join(this.root, 'dist');
     let out = join(dist, relative(this.root, v.output));

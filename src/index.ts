@@ -44,7 +44,10 @@ export function task(name: string, pipes: Pipe[], directory = './'): Promise<any
         );
 
         for (let i = 0; i < pipes.length; i++) {
-          v = pipes[i].do(v);
+          let pipe = pipes[i];
+          if (pipe.allows(filename)) {
+            v = pipes[i].do(v);
+          }
         }
 
         v.input.pipe(createWriteStream(v.output));

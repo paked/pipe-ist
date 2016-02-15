@@ -5,4 +5,5 @@ import { Valve } from './valve';
  */
 export interface Pipe {
   do(v: Valve): Valve;
+  allows(filename: string): boolean;
 }

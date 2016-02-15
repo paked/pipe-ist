@@ -8,6 +8,10 @@ export class RemoveAPipe extends Transform {
     return v;
   }
 
+  allows(filename: string): boolean {
+    return true;
+  }
+
   _transform(chunk: any, encoding: string, callback: any) {
     chunk = chunk.toString().replace(/a/g, '');
 
