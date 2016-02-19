@@ -4,6 +4,7 @@
   "description": "pipe-ist is a simple and powerful build system",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/bin/piper.js",
     "build": "tsc",
     "lint": "tslint -c tslint.json \"src/**/*.ts\"",
     "postinstall": "typings install --no-insight",

@@ -56,6 +56,13 @@ export function task(name: string, pipes: Pipe[], directory = './'): Promise<any
       });
     });
 
-    return Promise.all(promises);
+    return Promise.all(promises)
+      .then(() => { return Promise.resolve() });
   });
+}
+
+export function greeter(): Promise <any> {
+  return new Promise<string>((resolve) => {
+    setTimeout(() => resolve('Welcome to the club!'), 1000);
+  }).then((greet) => new Promise<string>((resolve) => resolve(greet + ' wut')));
 }
