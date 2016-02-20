@@ -1,109 +1,82 @@
 # pipe-ist
 
-`pipe-ist` is a build tool for node.js projects. It is modular but restrictive, and easy to go from zero to a fully working build process.
+A back to basics build tool for JavaScript, TypeScript and pretty much everything else. `pipe-ist` aims to be as "no bulls#%t" as possible.
 
-## Spec
+## Design Specification
 
-Configuration is done in a `pipe.js` file. An example of this looks like the following:
+All configuration is done in a `pipefile`. The `pipefile` used in this specification looks like the following:
 
+*`pipefile.js`*
 ```js
-require('pipe-ist').
-    task('default', [
-        'assets-pipe',
-        'typescript-pipe'
-    ]);
+var pi = require('pipe-ist');
+
+pi.task('default', [
+    require('compile-typescript-pipe'),
+    require('move-to-bin-pipe')
+]);
 ```
 
-`pipe-ist` makes various assumptions about your project.
+`pipe-ist` differs from other build systems in what it does *not* do. It does not:
 
-- Your output folder is `dist`
+- Watch your files
+- Automatically (and confusingly) package things
+- [Abuse Tim Bernes-Lee's vision of the internet](https://defaultnamehere.tumblr.com/post/139351766005/graphing-when-your-facebook-friends-are-awake)
 
-The values you provide can be either:
+It focusses on doing one thing well:
 
-- `strings`: The name of the package on NPM. Will be `require(str)`'d
-- `functions`: A function to exectute, must match the `function(files, config) -> Output` pattern
+- Defining pipelines
 
-The basic principle is that everything is "piped" from one handler to another, each time the handler may transform a file which will be reflected in the next pipe. For example imagine the file structure:
+In the context of `pipe-ist` a pipeline is a series of "processes" which a file is passed through. We call each individual process a Pipe. Pipes have the opportunity to transform a file in whatever manner they like, and these changes will be reflected throughout the rest of the pipeline.
+
+Take the example file structure:
 
 ```
 - src/
   - main.ts
-  - style.sas
-  - index.jade
-  - img/
-    - your_face.png
-    - my_face.jpg
-- dist/
-```
-
-And the `pipe.js` file:
-
-```js
-require('pipe-ist').
-  task('default', [
-    'typescript-pipe',
-    'sass-pipe',
-    'jade-pipe',
-    'jpg-pipe',
-    'assets-move-pipe',
-    'serve'
-  ]);
-```
-
-Firstly, we pipe this through the "typescript" pipe. Which then becomes reflected as:
-
-```
-- src/
-  - style.sass
-  - index.jade
-  - img/
-    - your_face.png
-    - my_face.jpg
-- dist/
-  - main.js
-```
-
-*note: The working tree exists in memory, so the removal of files from the tree does not delete them from your system*
-
-Then we pipe these resources through the "jade" and "sass" pipes respectively:
-
-```
-- src/
-  - img/
-    - your_face.png
-    - my_face.jpg
-- dist/
-  - main.js
-  - style.css
-  - index.html
-```
-
-Now we have another pipe which converts all `jpg` files into `png`s.
-
-```
-- src/
-  - img/
-    - your_face.jpg
-    - my_face.jpg
-- dist/
-  - main.js
-  - style.css
-  - index.html
-```
-
-*Notice how that not all pipes have to move the file into the distribution folder*
-
-And then another to move these `jpg` files into the distribution place.
-
-```
-- src/
-- dist/
-  - main.js
-  - style.css
   - index.html
   - img/
-    - your_face.jpg
-    - my_face.jpg
+    - your_face.png
 ```
 
-Which produces the final result. At this point `pipe-ist` will watch for any changes and if there are, re-execute the piping process. Due to the way files are treated programatically any files that have not been changed will not need to be reprocessed.
+[And the `pipefile.js` references above.](#design-specification)
+
+In order to instantiate the task "default" we run the command `piper default` (it could just be `piper`, but we are being specific here!). This runs the task with the name "default", which is in this case our only task. It is here the "magic" begins.
+
+Firstly, all of our files are passed through `compile-typescript-pipe` which yields the new file structure:
+
+```
+- src/
+  - main.js
+  - img/
+    - your_face.png
+```
+
+*note: The file structure is copied into memory, so nothing is persisted until the pipeline has finished running. This means that your `main.ts` file WILL NOT be replaced with a compiled `main.js` on your actual file system!*
+
+Each Pipe defines a function which will dynamically tell the pipeline runner whether or not it is fit to process a file. In this case, `main.ts` *was* eligible so was thus processed, however `your_face.png` and `index.html` were not.
+
+Next the files are passed through `move-to-bin-pipe`. This results in:
+
+```
+- src/
+- dist/
+  - main.js
+  - index.html
+  - img/
+    - your_face.png
+```
+
+Finally, because this is the last Pipe the virtual copies of the files are persisted into the file system. Which means that the end result for the *physical* file system would be:
+
+```
+- src/
+  - main.ts
+  - index.html
+  - img/
+    - your_face.png
+- dist/
+  - main.js
+  - index.html
+  - img/
+    - your_face.png
+```
