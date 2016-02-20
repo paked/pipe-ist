@@ -11,7 +11,7 @@ import { Valve } from './valve';
 /*
  * Create a task with a name and a set of pipes for it to run through.
  */
-export function task(name: string, pipes: Pipe[], directory = './'): Promise<any> {
+export function task(name: string, pipes: Pipe[], directory = process.cwd()): Promise<any> {
   return new Promise<any>((resolve) => {
     let distPath = join(directory, 'dist');
     stat(distPath, (err, stats) => {

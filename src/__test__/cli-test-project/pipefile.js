@@ -5,7 +5,7 @@ var pipes = [
   new (new require('../../../dist/pipes/move-to-bin.js').MoveToBinPipe)(process.cwd())
 ];
 
-pi.task('default', pipes, process.cwd()) 
+pi.task('default', pipes) 
   .then(function() {
     console.log('done');
   });
