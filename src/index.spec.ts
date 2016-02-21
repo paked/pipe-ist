@@ -18,8 +18,12 @@ test('index', t => {
                   new MoveToBinPipe(FIXTURE_DIR)
                 ],
                 FIXTURE_DIR)
-    .then((t) => {
-      return runTask(t);
+    .then((ts) => {
+      t.equals(ts.name, 'default');
+      t.equals(ts.pipes.length, 2);
+      t.equals(ts.directory, FIXTURE_DIR);
+
+      return runTask(ts);
     })
     .then(() => {
       return readFile(join(FIXTURE_DIR, 'dist/sample.txt'), 'utf-8');
@@ -40,8 +44,12 @@ test('index', t => {
                   new MoveToBinPipe(FIXTURE_DIR)
                 ],
                 FIXTURE_DIR)
-    .then((t) => {
-      return runTask(t);
+    .then((ts) => {
+      t.equals(ts.name, 'default');
+      t.equals(ts.pipes.length, 2);
+      t.equals(ts.directory, FIXTURE_DIR);
+
+      return runTask(ts);
     })
     .then(() => {
       return readFile(join(FIXTURE_DIR, '/dist/something.js'), 'utf-8')
