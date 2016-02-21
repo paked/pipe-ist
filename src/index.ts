@@ -95,9 +95,3 @@ export function runTask(t: Task): Promise<any> {
       });
   });
 }
-
-export function greeter(): Promise <any> {
-  return new Promise<string>((resolve) => {
-    setTimeout(() => resolve('Welcome to the club!'), 1000);
-  }).then((greet) => new Promise<string>((resolve) => resolve(greet + ' wut')));
-}
