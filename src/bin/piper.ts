@@ -2,7 +2,7 @@ import minimist = require('minimist');
 
 import { join, isAbsolute } from 'path';
 
-import { runTask } from '../index';
+import { runTask, tasks, setChanged } from '../index';
 
 interface Args {
   help: boolean;
@@ -28,17 +28,25 @@ Options:
 -f      Choose which 'pipe.js' file to run
               `);
 } else {
+  let taskName = args._[0];
+
   let path = args.file || 'pipefile.js';
   if (!isAbsolute(path)) {
     path = join(process.cwd(), path);
   }
   
   try {
-    let pipefile = require(path);
-    pipefile.go = function() {
-      let t = pipefile[args._[0]];
-      runTask(t);
-    };
+    let pipefile: any;
+    setChanged(function(tn) {
+      if (tn != taskName) {
+        console.log(`${tn} is not ${taskName}`);
+        return;
+      }
+
+      runTask(tasks[taskName]);
+    });
+
+    pipefile = require(path);
   } catch (e) {
     console.log(`Could not get pipefile (${path}), because error: ${e}`);
   }

@@ -5,8 +5,4 @@ var pipes = [
   new (new require('../../../dist/pipes/move-to-bin.js').MoveToBinPipe)(process.cwd())
 ];
 
-pi.task('default', pipes) 
-  .then(function(t) {
-    module.exports['default'] = t;
-    module.exports.go();
-  });
+pi.task('default', pipes);

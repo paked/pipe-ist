@@ -8,14 +8,18 @@ import { getFiles } from './utils';
 import { Pipe } from './pipe';
 import { Valve } from './valve';
 
-
 interface Task {
   name: string
   pipes: Pipe[]
   directory: string
 }
 
-var tasks: { [name: string]: Task; } = {};
+export let tasks: { [name: string]: Task; } = {};
+let changed: (string) => void = () => undefined;
+
+export function setChanged(fn: (string) => void) {
+  changed = fn;
+}
 
 export function task(name: string, pipes: Pipe[], directory = process.cwd()): Promise<Task> {
   let t: Task = {
@@ -26,7 +30,7 @@ export function task(name: string, pipes: Pipe[], directory = process.cwd()): Pr
 
   return new Promise<Task>((resolve, reject) => {
     tasks[t.name] = t;
-
+    changed(t.name);
     resolve(t);
   });
 }
