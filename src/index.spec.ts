@@ -3,7 +3,7 @@ import test = require('blue-tape');
 import { join } from 'path';
 import { EOL } from 'os';
 
-import { runTask } from './index';
+import { task, runTask } from './index';
 import { readFile } from './utils';
 import { RemoveAPipe } from './pipes/remove-a';
 import { MoveToBinPipe } from './pipes/move-to-bin';
@@ -13,11 +13,14 @@ test('index', t => {
   t.test('basic rename rewrite', t => {
     const FIXTURE_DIR = join(__dirname, '__test__/index-task');
 
-    return runTask('default', [
+    return task('default', [
                   new RemoveAPipe(),
                   new MoveToBinPipe(FIXTURE_DIR)
                 ],
                 FIXTURE_DIR)
+    .then((t) => {
+      return runTask(t);
+    })
     .then(() => {
       return readFile(join(FIXTURE_DIR, 'dist/sample.txt'), 'utf-8');
     })
@@ -32,12 +35,17 @@ test('index', t => {
   t.test('compile to TypeScript', t => {
     const FIXTURE_DIR = join(__dirname, '__test__/index-compile-typescript');
 
-    return runTask('default', [
+    return task('default', [
                   new CompileTypeScriptPipe(),
                   new MoveToBinPipe(FIXTURE_DIR)
                 ],
                 FIXTURE_DIR)
-    .then(() => { return readFile(join(FIXTURE_DIR, '/dist/something.js'), 'utf-8')})
+    .then((t) => {
+      return runTask(t);
+    })
+    .then(() => {
+      return readFile(join(FIXTURE_DIR, '/dist/something.js'), 'utf-8')
+    })
     .then(compiledJS => {
       t.deepEqual(compiledJS, [
         `var HelloWorldGreeter = (function () {`,
