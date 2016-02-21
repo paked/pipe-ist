@@ -8,12 +8,38 @@ import { getFiles } from './utils';
 import { Pipe } from './pipe';
 import { Valve } from './valve';
 
+
+interface Task {
+  name: string
+  pipes: Pipe[]
+  directory: string
+}
+
+var tasks: { [name: string]: Task; } = {};
+
+export function task(name: string, pipes: Pipe[], directory = process.cwd()): Promise<Task> {
+  let t: Task = {
+    name: name,
+    pipes: pipes,
+    directory: directory
+  };
+
+  return new Promise<Task>((resolve, reject) => {
+    tasks[t.name] = t;
+
+    resolve(t);
+  });
+}
+
+
 /*
- * Create a task with a name and a set of pipes for it to run through.
+ * Run a previously defined task.
  */
-export function task(name: string, pipes: Pipe[], directory = process.cwd()): Promise<any> {
+export function runTask(t: Task): Promise<any> {
+  console.log(`Running task ${t.name}...`);
+
   return new Promise<any>((resolve) => {
-    let distPath = join(directory, 'dist');
+    let distPath = join(t.directory, 'dist');
     stat(distPath, (err, stats) => {
       if (err == undefined) {
         rimraf(distPath, (err) => {
@@ -33,7 +59,7 @@ export function task(name: string, pipes: Pipe[], directory = process.cwd()): Pr
     });
   })
   .then(() => {
-    return getFiles(directory);
+    return getFiles(t.directory);
   })
   .then((files) => {
     let promises: Promise<any>[] = files.map((filename) => {
@@ -43,10 +69,10 @@ export function task(name: string, pipes: Pipe[], directory = process.cwd()): Pr
           filename
         );
 
-        for (let i = 0; i < pipes.length; i++) {
-          let pipe = pipes[i];
+        for (let i = 0; i < t.pipes.length; i++) {
+          let pipe = t.pipes[i];
           if (pipe.allows(filename)) {
-            v = pipes[i].do(v);
+            v = pipe.do(v);
           }
         }
 
@@ -57,7 +83,11 @@ export function task(name: string, pipes: Pipe[], directory = process.cwd()): Pr
     });
 
     return Promise.all(promises)
-      .then(() => { return Promise.resolve() });
+      .then(() => {
+        console.log(`Finished running task ${t.name}`);
+
+        return Promise.resolve();
+      });
   });
 }
 

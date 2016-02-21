@@ -2,6 +2,8 @@ import minimist = require('minimist');
 
 import { join, isAbsolute } from 'path';
 
+import { runTask } from '../index';
+
 interface Args {
   help: boolean;
   file: string
@@ -33,6 +35,10 @@ Options:
   
   try {
     let pipefile = require(path);
+    pipefile.go = function() {
+      let t = pipefile[args._[0]];
+      runTask(t);
+    };
   } catch (e) {
     console.log(`Could not get pipefile (${path}), because error: ${e}`);
   }

@@ -3,7 +3,7 @@ import test = require('blue-tape');
 import { join } from 'path';
 import { EOL } from 'os';
 
-import { task } from './index';
+import { runTask } from './index';
 import { readFile } from './utils';
 import { RemoveAPipe } from './pipes/remove-a';
 import { MoveToBinPipe } from './pipes/move-to-bin';
@@ -13,7 +13,7 @@ test('index', t => {
   t.test('basic rename rewrite', t => {
     const FIXTURE_DIR = join(__dirname, '__test__/index-task');
 
-    return task('default', [
+    return runTask('default', [
                   new RemoveAPipe(),
                   new MoveToBinPipe(FIXTURE_DIR)
                 ],
@@ -32,7 +32,7 @@ test('index', t => {
   t.test('compile to TypeScript', t => {
     const FIXTURE_DIR = join(__dirname, '__test__/index-compile-typescript');
 
-    return task('default', [
+    return runTask('default', [
                   new CompileTypeScriptPipe(),
                   new MoveToBinPipe(FIXTURE_DIR)
                 ],

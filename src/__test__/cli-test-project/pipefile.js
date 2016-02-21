@@ -6,6 +6,7 @@ var pipes = [
 ];
 
 pi.task('default', pipes) 
-  .then(function() {
-    console.log('done');
+  .then(function(t) {
+    module.exports['default'] = t;
+    module.exports.go();
   });
