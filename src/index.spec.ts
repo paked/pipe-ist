@@ -15,7 +15,7 @@ test('index', t => {
 
     return task('default', [
                   new RemoveAPipe(),
-                  new MoveToBinPipe(FIXTURE_DIR)
+                  new MoveToBinPipe()
                 ],
                 FIXTURE_DIR)
     .then((ts) => {
@@ -41,7 +41,7 @@ test('index', t => {
 
     return task('default', [
                   new CompileTypeScriptPipe(),
-                  new MoveToBinPipe(FIXTURE_DIR)
+                  new MoveToBinPipe()
                 ],
                 FIXTURE_DIR)
     .then((ts) => {

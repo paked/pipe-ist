@@ -70,7 +70,8 @@ export function runTask(t: Task): Promise<any> {
       return new Promise<any>(resolve => {
         let v: Valve = new Valve(
           createReadStream(filename),
-          filename
+          filename,
+          t.directory
         );
 
         for (let i = 0; i < t.pipes.length; i++) {
