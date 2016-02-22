@@ -2,12 +2,16 @@
 
 A back to basics build tool for JavaScript, TypeScript and pretty much everything else. `pipe-ist` aims to be as "no bulls#%t" as possible.
 
+## Usage
+
+It is recommended to use `pipe-ist` in conjunction with [NPM Scripts](https://docs.npmjs.com/misc/scripts). If you need to run multiple commands at the same time see [`concurrently`](https://www.npmjs.com/package/concurrently) and for "watching" behaviour see [`onchange`](https://www.npmjs.com/package/onchange).
+
 ## Design Specification
 
 All configuration is done in a `pipefile`. The `pipefile` used in this specification looks like the following:
 
-*`pipefile.js`*
 ```js
+// pipefile.js
 var pi = require('pipe-ist');
 
 pi.task('default', [
@@ -22,9 +26,9 @@ pi.task('default', [
 - Automatically (and confusingly) package things
 - [Abuse Tim Bernes-Lee's vision of the internet](https://defaultnamehere.tumblr.com/post/139351766005/graphing-when-your-facebook-friends-are-awake)
 
-It focusses on doing one thing well:
+It focusses on one part of the "build" process:
 
-- Defining pipelines
+- Pipelines
 
 In the context of `pipe-ist` a pipeline is a series of "processes" which a file is passed through. We call each individual process a Pipe. Pipes have the opportunity to transform a file in whatever manner they like, and these changes will be reflected throughout the rest of the pipeline.
 
