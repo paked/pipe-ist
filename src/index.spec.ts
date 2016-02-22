@@ -6,7 +6,7 @@ import { EOL } from 'os';
 import { task, runTask } from './index';
 import { readFile } from './utils';
 import { RemoveAPipe } from './pipes/remove-a';
-import { MoveToBinPipe } from './pipes/move-to-bin';
+import { MoveToDistPipe } from './pipes/move-to-dist';
 import { CompileTypeScriptPipe } from './pipes/compile-typescript';
 
 test('index', t => {
@@ -15,7 +15,7 @@ test('index', t => {
 
     return task('default', [
                   new RemoveAPipe(),
-                  new MoveToBinPipe()
+                  new MoveToDistPipe()
                 ],
                 FIXTURE_DIR)
     .then((ts) => {
@@ -41,7 +41,7 @@ test('index', t => {
 
     return task('default', [
                   new CompileTypeScriptPipe(),
-                  new MoveToBinPipe()
+                  new MoveToDistPipe()
                 ],
                 FIXTURE_DIR)
     .then((ts) => {

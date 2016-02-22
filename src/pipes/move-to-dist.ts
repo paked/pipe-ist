@@ -2,7 +2,7 @@ import { relative, join } from 'path';
 
 import { Valve } from '../valve';
 
-export class MoveToBinPipe {
+export class MoveToDistPipe {
   allows(filename: string): boolean {
     return true;
   }

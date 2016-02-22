@@ -11,7 +11,7 @@
     "src/bin/piper.ts",
     "src/pipe.ts",
     "src/pipes/compile-typescript.ts",
-    "src/pipes/move-to-bin.ts",
+    "src/pipes/move-to-dist.ts",
     "src/pipes/remove-a.ts",
     "typings/main.d.ts"
   ]
