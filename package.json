@@ -1,8 +1,8 @@
 {
   "name": "pipe-ist",
   "version": "0.1.0",
-  "description": "pipe-ist is a simple and powerful build system",
-  "main": "index.js",
+  "description": "A back to basics build tool for JavaScript, TypeScript and pretty much everything else.",
+  "main": "dist/index.js",
   "scripts": {
     "start": "node dist/bin/piper.js",
     "build": "tsc",
