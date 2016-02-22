@@ -1,8 +1,10 @@
 import Promise = require('any-promise');
 
-import { mkdirSync, stat, createReadStream, createWriteStream } from 'fs';
-import { join } from 'path';
+import { mkdirSync, stat, statSync,  createReadStream, createWriteStream } from 'fs';
+
+import { join, dirname } from 'path';
 import rimraf = require('rimraf');
+import mkdirp = require('mkdirp');
 
 import { getFiles } from './utils';
 import { Pipe } from './pipe';
@@ -81,6 +83,14 @@ export function runTask(t: Task): Promise<any> {
           }
         }
 
+        try {
+          let stats = statSync(dirname(v.output));
+        } catch(e) {
+          if (e.code == 'ENOENT') {
+            mkdirp.sync(dirname(v.output));
+          }
+        }
+        
         v.input.pipe(createWriteStream(v.output));
 
         resolve();
