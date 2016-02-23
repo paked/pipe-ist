@@ -1,6 +1,6 @@
 # pipe-ist
 
-A back to basics build tool for JavaScript, TypeScript and pretty much everything else. `pipe-ist` aims to be as "no bulls#%t" as possible.
+A back to basics build tool for JavaScript, TypeScript and pretty much everything else. `pipe-ist` aims to be good at a single part of the building process: Pipelines.
 
 ## Usage
 
