@@ -16,3 +16,7 @@ export class MoveToDistPipe {
     return v;
   }
 }
+
+export function create(): Pipe {
+  return new MoveToDistPipe();
+}

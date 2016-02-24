@@ -7,7 +7,7 @@ import rimraf = require('rimraf');
 import mkdirp = require('mkdirp');
 
 import { getFiles } from './utils';
-import { Pipe } from './pipe';
+import { Pipe, Plumber, isPlumber } from './pipe';
 import { Valve } from './valve';
 
 interface Task {
@@ -23,10 +23,18 @@ export function setChanged(fn: (string) => void) {
   changed = fn;
 }
 
-export function task(name: string, pipes: Pipe[], directory = process.cwd()): Promise<Task> {
+export function task(name: string, pipes: Array<Pipe | Plumber>, directory = process.cwd()): Promise<Task> {
+  let npipes: Pipe[] = pipes.map((pipe) => {
+    if (isPlumber(pipe)) {
+      return pipe.create();
+    }
+
+    return <Pipe> pipe;
+  });
+
   let t: Task = {
     name: name,
-    pipes: pipes,
+    pipes: npipes,
     directory: directory
   };
 

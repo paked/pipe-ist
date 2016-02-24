@@ -3,6 +3,7 @@ import { Transform } from 'stream';
 import { extname, parse, format } from 'path';
 
 import { Valve } from '../valve';
+import { Pipe } from '../pipe';
 
 export class CompileTypeScriptPipe extends Transform {
   allows(filename): boolean {
@@ -27,4 +28,8 @@ export class CompileTypeScriptPipe extends Transform {
     this.push(chunk);
     callback();
   }
+}
+
+export function create(): Pipe {
+  return new CompileTypeScriptPipe();
 }

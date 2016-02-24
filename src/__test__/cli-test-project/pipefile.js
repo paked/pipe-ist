@@ -1,8 +1,8 @@
 var pi = require('../../../dist/index');
 
 var pipes = [
-  new (new require('../../../dist/pipes/compile-typescript.js').CompileTypeScriptPipe)(),
-  new (new require('../../../dist/pipes/move-to-dist.js').MoveToDistPipe)()
+  require('../../../dist/pipes/compile-typescript.js'),
+  require('../../../dist/pipes/move-to-dist.js')
 ];
 
 pi.task('default', pipes);
