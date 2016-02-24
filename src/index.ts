@@ -10,19 +10,26 @@ import { getFiles } from './utils';
 import { Pipe, Plumber, isPlumber } from './pipe';
 import { Valve } from './valve';
 
+// A single task/pipeline and other unit of build tool-ness
 interface Task {
   name: string
   pipes: Pipe[]
   directory: string
 }
 
+// An dictionary of currently registered tasks.
 export let tasks: { [name: string]: Task; } = {};
+// A function which gets called when a new task is added to the tasks dictionary.
 let changed: (string) => void = () => undefined;
 
+// A shortcut to set changed.
 export function setChanged(fn: (string) => void) {
   changed = fn;
 }
 
+/*
+ * Register a new task.
+ */
 export function task(name: string, pipes: Array<Pipe | Plumber>, directory = process.cwd()): Promise<Task> {
   let npipes: Pipe[] = pipes.map((pipe) => {
     if (isPlumber(pipe)) {
