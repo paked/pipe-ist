@@ -6,7 +6,7 @@ import { join, dirname } from 'path';
 import rimraf = require('rimraf');
 import mkdirp = require('mkdirp');
 
-import { getFiles } from './utils';
+import { getFiles, getArgs } from './utils';
 import { Pipe, Plumber, isPlumber } from './pipe';
 import { Valve } from './valve';
 
@@ -17,20 +17,10 @@ interface Task {
   directory: string
 }
 
-// An dictionary of currently registered tasks.
-export let tasks: { [name: string]: Task; } = {};
-// A function which gets called when a new task is added to the tasks dictionary.
-let changed: (string) => void = () => undefined;
-
-// A shortcut to set changed.
-export function setChanged(fn: (string) => void) {
-  changed = fn;
-}
-
 /*
  * Register a new task.
  */
-export function task(name: string, pipes: Array<Pipe | Plumber>, directory = process.cwd()): Promise<Task> {
+export function task(name: string, pipes: Array<Pipe | Plumber>, directory = process.cwd(), args = getArgs()): Promise<Task> {
   let npipes: Pipe[] = pipes.map((pipe) => {
     if (isPlumber(pipe)) {
       return pipe.create();
@@ -46,8 +36,12 @@ export function task(name: string, pipes: Array<Pipe | Plumber>, directory = pro
   };
 
   return new Promise<Task>((resolve, reject) => {
-    tasks[t.name] = t;
-    changed(t.name);
+    let ran = false;
+    if (t.name == (args._[0] || 'default')) {
+      ran = true;
+      runTask(t);
+    }
+
     resolve(t);
   });
 }

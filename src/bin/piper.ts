@@ -1,24 +1,12 @@
 #!/usr/bin/env node
 
-import minimist = require('minimist');
-
 import { join, isAbsolute } from 'path';
 
-import { runTask, tasks, setChanged } from '../index';
+import { getArgs } from '../utils';
 
-interface Args {
-  help: boolean;
-  file: string
-}
+console.log('Welcome to piper!');
 
-let args = minimist<Args>(process.argv.slice(2), {
-  boolean: ['help'],
-  string: ['file'],
-  alias: {
-    help: ['h'],
-    file: ['f']
-  }
-});
+let args = getArgs();
 
 if (args.help) {
   console.log(`
@@ -28,27 +16,15 @@ Usage: piper <task>
 
 Options:
 -f      Choose which 'pipe.js' file to run
-              `);
+`);
 } else {
-  let taskName = args._[0];
-
   let path = args.file || 'pipefile.js';
   if (!isAbsolute(path)) {
     path = join(process.cwd(), path);
   }
   
   try {
-    let pipefile: any;
-    setChanged(function(tn) {
-      if (tn != taskName) {
-        console.log(`${tn} is not ${taskName}`);
-        return;
-      }
-    
-      runTask(tasks[taskName]);
-    });
-
-    pipefile = require(path);
+    let pipefile = require(path);
   } catch (e) {
     console.log(`Could not get pipefile (${path}), because error: ${e}`);
   }

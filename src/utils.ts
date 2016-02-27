@@ -1,5 +1,6 @@
 import Promise = require('any-promise');
 import thenify = require('thenify');
+import minimist = require('minimist');
 
 import { readdir, stat } from 'fs';
 import { join } from 'path';
@@ -43,5 +44,21 @@ export function getFiles(folder: string = './'): Promise<string[]> {
         resolve(files);
       });
     });
+  });
+}
+
+interface Args {
+  help: boolean;
+  file: string
+}
+
+export function getArgs(raw = process.argv.slice(2)): Args & minimist.ParsedArgs {
+  return minimist<Args>(raw, {
+    boolean: ['help'],
+    string: ['file'],
+    alias: {
+      help: ['h'],
+      file: ['f']
+    }
   });
 }
