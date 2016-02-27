@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import minimist = require('minimist');
 
 import { join, isAbsolute } from 'path';
@@ -42,7 +44,7 @@ Options:
         console.log(`${tn} is not ${taskName}`);
         return;
       }
-
+    
       runTask(tasks[taskName]);
     });
 

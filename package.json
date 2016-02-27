@@ -1,6 +1,6 @@
 {
   "name": "pipe-ist",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A back to basics build tool for JavaScript, TypeScript and pretty much everything else.",
   "main": "dist/index.js",
   "keywords": [
@@ -15,7 +15,8 @@
     "build": "tsc",
     "lint": "tslint -c tslint.json \"src/**/*.ts\"",
     "postinstall": "typings install --no-insight",
-    "prepublish": "npm run build",
+    "prepublish": "if [ ! $SKIP_PREPUBLISH ] ; then npm run build; fi",
+    "dry": "SKIP_PREPUBLISH=true; npm run prepublish",
     "test": "ts-node node_modules/blue-tape/bin/blue-tape \"src/**/*.spec.ts\" | tap-spec"
   },
   "files": [
