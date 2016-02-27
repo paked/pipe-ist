@@ -1,6 +1,6 @@
 {
   "name": "pipe-ist",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A back to basics build tool for JavaScript, TypeScript and pretty much everything else.",
   "main": "dist/index.js",
   "keywords": [
