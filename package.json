@@ -1,8 +1,15 @@
 {
   "name": "pipe-ist",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A back to basics build tool for JavaScript, TypeScript and pretty much everything else.",
   "main": "dist/index.js",
+  "keywords": [
+    "pipe",
+    "pipeline",
+    "build",
+    "piper"
+  ],
+  "bin": { "piper": "dist/bin/piper.js" },
   "scripts": {
     "start": "node dist/bin/piper.js",
     "build": "tsc",
