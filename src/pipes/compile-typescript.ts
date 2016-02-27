@@ -12,7 +12,8 @@ export class CompileTypeScriptPipe extends Transform {
 
   do(v: Valve): Valve {
     v.input = v.input.pipe(this);
-
+    v.input.setMaxListeners(Infinity);
+  
     let extension = extname(v.output);
 
     // Change file extensions to JavaScript
@@ -22,7 +23,6 @@ export class CompileTypeScriptPipe extends Transform {
   }
 
   _transform(chunk: any, encoding: string, callback: any) {
-    console.log('transforming');
     chunk = transpile(chunk.toString(), { module: ModuleKind.CommonJS });
 
     this.push(chunk);
