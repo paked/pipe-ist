@@ -1,6 +1,7 @@
 import { relative, join } from 'path';
 
 import { Valve } from '../valve';
+import { Pipe } from '../pipe';
 
 export class MoveToDistPipe {
   allows(filename: string): boolean {
