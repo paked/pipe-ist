@@ -10,7 +10,9 @@ import { getFiles, getArgs } from './utils';
 import { Pipe, Plumber, isPlumber } from './pipe';
 import { Valve } from './valve';
 
-// A single task/pipeline and other unit of build tool-ness
+/*
+ * A single task/pipeline and other unit of build tool-ness
+ */
 interface Task {
   name: string
   pipes: Pipe[]
@@ -45,7 +47,6 @@ export function task(name: string, pipes: Array<Pipe | Plumber>, directory = pro
     resolve(t);
   });
 }
-
 
 /*
  * Run a previously defined task.

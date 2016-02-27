@@ -1,6 +1,6 @@
 {
   "name": "pipe-ist",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A back to basics build tool for JavaScript, TypeScript and pretty much everything else.",
   "main": "dist/index.js",
   "keywords": [
@@ -9,10 +9,12 @@
     "build",
     "piper"
   ],
-  "bin": { "piper": "dist/bin/piper.js" },
+  "bin": {
+    "piper": "dist/bin/piper.js"
+  },
   "scripts": {
     "start": "node dist/bin/piper.js",
-    "build": "tsc",
+    "build": "onchange 'src/**/*.ts' -- piper build",
     "lint": "tslint -c tslint.json \"src/**/*.ts\"",
     "postinstall": "typings install --no-insight",
     "prepublish": "if [ ! $SKIP_PREPUBLISH ] ; then npm run build; fi",
@@ -46,6 +48,7 @@
   },
   "devDependencies": {
     "blue-tape": "^0.2.0",
+    "onchange": "^2.0.0",
     "tap-spec": "^4.1.1",
     "ts-node": "^0.5.5",
     "typescript": "^1.7.5"
