@@ -51,6 +51,7 @@ Firstly, all of our files are passed through `compile-typescript-pipe` which yie
 ```
 - src/
   - main.js
+  - index.html
   - img/
     - your_face.png
 ```
