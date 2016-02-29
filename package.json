@@ -16,7 +16,6 @@
     "start": "node dist/bin/piper.js",
     "build": "onchange 'src/**/*.ts' -- piper build",
     "lint": "tslint -c tslint.json \"src/**/*.ts\"",
-    "postinstall": "typings install --no-insight",
     "prepublish": "if [ ! $SKIP_PREPUBLISH ] ; then npm run build; fi",
     "dry": "SKIP_PREPUBLISH=true; npm run prepublish",
     "test": "ts-node node_modules/blue-tape/bin/blue-tape \"src/**/*.spec.ts\" | tap-spec"
