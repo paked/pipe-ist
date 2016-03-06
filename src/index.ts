@@ -7,7 +7,7 @@ import rimraf = require('rimraf');
 import mkdirp = require('mkdirp');
 
 import { getFiles, getArgs } from './utils';
-import { Pipe, Plumber, isPlumber } from './pipe';
+import { Pipe, Plumber, isPlumber, isPipe, WrapPlumber } from './pipe';
 import { Valve } from './valve';
 
 /*
@@ -15,20 +15,20 @@ import { Valve } from './valve';
  */
 interface Task {
   name: string
-  pipes: Pipe[]
+  pipes: Plumber[]
   directory: string
 }
 
 /*
  * Register a new task.
  */
-export function task(name: string, pipes: Array<Pipe | Plumber>, directory = process.cwd(), args = getArgs()): Promise<Task> {
-  let npipes: Pipe[] = pipes.map((pipe) => {
-    if (isPlumber(pipe)) {
-      return pipe.create();
+export function task(name: string, pipes: Array<any>, directory = process.cwd(), args = getArgs()): Promise<Task> {
+  let npipes: Plumber[] = pipes.map((plumber) => {
+    if (isPipe(plumber)) {
+      return new WrapPlumber(plumber);
     }
 
-    return <Pipe> pipe;
+    return plumber;
   });
 
   let t: Task = {
@@ -87,7 +87,7 @@ export function runTask(t: Task): Promise<any> {
         );
 
         for (let i = 0; i < t.pipes.length; i++) {
-          let pipe = t.pipes[i];
+          let pipe = t.pipes[i].create();
           if (pipe.allows(filename)) {
             v = pipe.do(v);
           }

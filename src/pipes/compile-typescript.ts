@@ -12,7 +12,6 @@ export class CompileTypeScriptPipe extends Transform {
 
   do(v: Valve): Valve {
     v.input = v.input.pipe(this);
-    v.input.setMaxListeners(Infinity);
   
     let extension = extname(v.output);
 
